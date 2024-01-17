@@ -1,0 +1,41 @@
+/* Body & Background */
+body {
+    background-color: #add8e6;
+}
+
+/* Header */
+.weather-header {
+    background-color: #4682b4 !important;
+}
+
+/* Search Form */
+.form {
+    margin-bottom: 20px;
+}
+
+/* Search Button */
+.search-button {
+    background-color: #4682b4;
+    color: #fff;
+}
+
+/* Search Input */
+.weather-search {
+    background-color: #e0f2f1;
+}
+
+/* Card styles */
+.card {
+    background-color: #87cefa;
+    color: #fff;
+}
+
+/* Forecast Card styles */
+.card-title {
+    color: #4682b4;
+}
+
+/* Border styles */
+.weather-hr {
+    border-color: #4682b4;
+}
