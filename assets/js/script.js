@@ -56,3 +56,27 @@ function fetchWeather(search) {
                 });
         });
 }
+
+
+function displayCurrentWeather(currentWeather) {
+    $('#icon').empty()
+    const iconCode = currentWeather.weather[0].icon;
+    const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+    console.log(currentWeather.weather[0].icon)
+    const icon = $('<img>').attr('src', iconUrl)
+    const temp = $('#temp').text(`Temperature: ${currentWeather.main.temp} C`);
+    const wind = $('#wind').text(`Wind: ${currentWeather.wind.speed} kph`);
+    const humidity = $('#humidity').text(`Humidity: ${currentWeather.main.humidity} %`);
+    $('#icon').append(icon)
+
+}
+
+$('#search-button').on('click', function (e) {
+    e.preventDefault();
+
+    const search = $('#search-input').val().trim();
+
+    $('#today').attr('class', 'mt-3');
+
+    fetchWeather(search);
+});
