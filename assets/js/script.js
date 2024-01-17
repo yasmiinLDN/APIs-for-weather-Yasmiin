@@ -3,6 +3,7 @@
 const key = "611631ac74efe5427566ac7f7af97eae";
 
 function fetchWeather(search) {
+    // url to get 5-day weather data
     let geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=5&appid=${key}`;
 
     fetch(geoUrl)
@@ -15,7 +16,7 @@ function fetchWeather(search) {
             let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${key}`;
 
             const h3El = $('#card-title').text(`${data[0].name} (${dayjs().format('MMMM D, YYYY')})`);
-
+            // once the forecast information is fetched above, then use that data below
             fetch(forecastUrl)
                 .then(function (response) {
                     return response.json();
@@ -26,31 +27,31 @@ function fetchWeather(search) {
 
                     const fiveDayForecast = currentWeather.filter(function (data) {
                         return data.dt_txt.includes('12:00:00')
-                    }
-                    )
+                    })
                     console.log(`five day forecast: ${fiveDayForecast}`)
 
                     const iconCode = currentWeather[0].weather[0].icon;
                     const iconUrl = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
 
                     $('#forecast').empty();
-
+                    // for loop to deal with 5-day forecast information
                     for (let i = 0; i < fiveDayForecast.length; i++) {
+                        // day variable below stores each day/index of the 'fivedayforecast' as a separate index
                         const day = fiveDayForecast[i];
-
+                        // below section is building a card for each day of the weather forecast
                         const cardCol = $('<div>').attr('class', 'col-md')
                         const forecastCard = $('<div>').attr('class', 'card')
                         const forecastBody = $('<div>').attr('class', 'card-body')
-                        const forecastCardTitle = $('<h5>').attr('class', 'card-title').text(dayjs(day.dt_txt).format('MM-DD-YYYY'))
-                        const forecastTemp = $('<p>').text(`Temp: ${day.main.temp} C`)
-                        const forecastWind = $('<p>').text(`Wind: ${day.wind.speed} kph`)
+                        const forecastTitle = $('<h5>').attr('class', 'card-title').text(dayjs(day.dt_txt).format('MM-DD-YYYY'))
+                        const forecastTemp = $('<p>').text(`Temp: ${day.main.temp.toFixed(1)} C`)
+                        const forecastWind = $('<p>').text(`Wind: ${day.wind.speed.toFixed(1)} kph`)
                         const forecastHumidity = $('<p>').text(`Humidity: ${day.main.humidity} %`)
                         const forecastIcon = $('<img>').attr('src', iconUrl)
 
                         $('#forecast').append(cardCol)
                         cardCol.append(forecastCard)
                         forecastCard.append(forecastBody)
-                        forecastBody.append(forecastCardTitle, forecastIcon, forecastTemp, forecastWind, forecastHumidity)
+                        forecastBody.append(forecastTitle, forecastIcon, forecastTemp, forecastWind, forecastHumidity)
 
                     }
                 });
